@@ -88,16 +88,15 @@ function isValidAlternateInput(str) {
    passwordInput.password[passwordInput.policy.secondPosition] == target) > 0
 }
 
-module.exports.default = function(){
-  const part1 = fs.readFileSync("./inputs/day2.txt", "utf8")
-    .split("\n")
-    .filter(l => l.length > 0)
-    .reduce(countValid(isValidInput), 0)
+// Main func
 
-  const part2 = fs.readFileSync("./inputs/day2.txt", "utf8")
+module.exports.default = function(){
+  const input = fs.readFileSync("./inputs/day2.txt", "utf8")
     .split("\n")
-    .filter(l => l.length > 0)
-    .reduce(countValid(isValidAlternateInput), 0)
+    .filter(l => l.length > 0);
+     
+  const part1 = input.reduce(countValid(isValidInput), 0)
+  const part2 = input.reduce(countValid(isValidAlternateInput), 0)
 
   console.log(part1)
   console.log(part2)
