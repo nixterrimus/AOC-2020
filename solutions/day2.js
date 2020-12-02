@@ -1,5 +1,7 @@
 const fs = require("fs");
 
+/* Part I */
+
 /*
 type Policy {
   minCount: number,
@@ -13,7 +15,7 @@ type PasswordInput {
 }
 */
 
-// Sample input 1-3 a
+// Sample input "1-3 a"
 function parsePolicyString(input) /* Policy */ {
   const tokens = input.split(" ");
   const countTokens = tokens[0].split("-");
@@ -24,15 +26,17 @@ function parsePolicyString(input) /* Policy */ {
   }
 }
 
-function parsePasswordInput(input) /* PasswordInput */ {
+function parsePasswordInput(input, policyParser) /* PasswordInput */ {
   const tokens = input.split(":")
   return {
-    policy: parsePolicyString(tokens[0]),
+    policy: policyParser(tokens[0]),
     password: tokens[1].trim()
   }
 }
 
-function isValidInput(passwordInput) {
+function isValidInput(str) {
+  const passwordInput = parsePasswordInput(str, parsePolicyString)
+    
   const targetRepitant = passwordInput.policy.repitant;
   const targetCount = passwordInput.password
                          .split('')
@@ -46,11 +50,6 @@ function isValidInput(passwordInput) {
     targetCount >= passwordInput.policy.minCount;
 }
 
-function isValidRawInput(str){
-  const parsed = parsePasswordInput(str)
-  return isValidInput(parsed);
-}
-
 function countValid(testFn){
   return (count, input) => {
     if (testFn(input)) {
@@ -60,10 +59,46 @@ function countValid(testFn){
   }
 }
 
+/* Part II */
+/*
+type AlternatePolicy {
+  firstPosition: number,
+  secondPosition: number,
+  check: string
+}
+*/
+
+// Sample input "1-3 a"
+function parseAlternatePolicyString(input) /* AlternatePolicy */ {
+  const tokens = input.split(" ");
+  const countTokens = tokens[0].split("-");
+  return {
+    firstPosition: parseInt(countTokens[0]) - 1,
+    secondPosition: parseInt(countTokens[1]) - 1,
+    check: tokens[1]
+  }
+}
+
+function isValidAlternateInput(str) {
+  const passwordInput = parsePasswordInput(str, parseAlternatePolicyString)
+    
+  const target = passwordInput.policy.check;
+
+ return (passwordInput.password[passwordInput.policy.firstPosition] == target ^ 
+   passwordInput.password[passwordInput.policy.secondPosition] == target) > 0
+}
+
 module.exports.default = function(){
-  const input = fs.readFileSync("./inputs/day2.txt", "utf8")
+  const part1 = fs.readFileSync("./inputs/day2.txt", "utf8")
     .split("\n")
     .filter(l => l.length > 0)
-    .reduce(countValid(isValidRawInput), 0)
-  console.log(input)
+    .reduce(countValid(isValidInput), 0)
+
+  const part2 = fs.readFileSync("./inputs/day2.txt", "utf8")
+    .split("\n")
+    .filter(l => l.length > 0)
+    .reduce(countValid(isValidAlternateInput), 0)
+
+  console.log(part1)
+  console.log(part2)
 }

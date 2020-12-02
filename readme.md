@@ -2,3 +2,12 @@
  
  Nicole's [Advent of Code](https://adventofcode.com/2020) solutions for 2020.
  
+ ## Dev env
+ 
+ - iPad
+ - play.js app
+ 
+ 
+ ### Dev Env wish
+ - Paren matching
+ - symbol highlighting (if I have a symbol selected, highlight all matching symbols in doc)
