@@ -4,8 +4,10 @@
   "scripts": {
     "day-1": "node solutions/day1.js",
     "day-2": "node solutions/day2.js",
+    "prettier": "prettier --write solutions/*"
   },
-  "dependencies": {
-
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
 }
