@@ -90,7 +90,7 @@ function isValidAlternateInput(str) {
 
 // Main func
 
-module.exports.default = function(){
+function main(){
   const input = fs.readFileSync("./inputs/day2.txt", "utf8")
     .split("\n")
     .filter(l => l.length > 0);
@@ -101,3 +101,5 @@ module.exports.default = function(){
   console.log(part1)
   console.log(part2)
 }
+
+main();

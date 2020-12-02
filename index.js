@@ -1,5 +1,1 @@
-const day1 = require("./solutions/day1").default;
-
-const day2 = require("./solutions/day2").default
-
-day2()
+console.log("run the program with the node script")

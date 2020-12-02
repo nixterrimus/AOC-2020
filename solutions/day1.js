@@ -1,7 +1,5 @@
 var fs = require('fs');
 
-const input = fs.readFileSync("./inputs/day1.txt", 'utf8').split("\n").map(x => parseInt(x))
-
 function findTwoValuesThatSum(values, targetValue){
   for (const a of values) {
     for (const b of values) {
@@ -31,16 +29,17 @@ function multiply(a, b){
 }
 
 function findProduct(inputs, target, factorFunction){
-  const factors = factorFunction(input, target)
+  const factors = factorFunction(inputs, target)
   if (factors == null){
      return null
   }
   return factors.reduce(multiply)
 }
 
-module.exports.default = function(){
-  console.log("Day 1")
+function main(){
+  const input   = fs.readFileSync("./inputs/day1.txt", 'utf8').split("\n").map(x => parseInt(x));
+  
   console.log(findProduct(input, 2020, findTwoValuesThatSum))
   console.log(findProduct(input, 2020, findThreeValuesThatSum))
-  console.log("done")  
 }
+main();
