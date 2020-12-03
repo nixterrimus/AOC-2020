@@ -12,3 +12,5 @@
  - Paren matching
  - symbol highlighting (if I have a symbol selected, highlight all matching symbols in doc)
  - File opener (Command+P from VSCode)
+ - UNDO?
+ - move line up and down

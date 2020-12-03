@@ -4,6 +4,7 @@
   "scripts": {
     "day-1": "node solutions/day1.js",
     "day-2": "node solutions/day2.js",
+    "day-3": "node solutions/day3.js",
     "prettier": "prettier --write solutions/*"
   },
   "dependencies": {},
