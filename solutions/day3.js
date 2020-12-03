@@ -16,6 +16,10 @@ function sampleInput() {
 `.trim();
 }
 
+function realInput() {
+  return fs.readFileSync("./inputs/day3.txt", "utf8").trim();
+}
+
 /*
 type Position {
   x: number,
@@ -45,74 +49,76 @@ function move(treeMap, startingPosition, movement) /* MovementResult */ {
   const rowCount = treeMap.length;
 
   var totalTreesSeen = 0;
-  
 
-  for (var rightOffset = 1; rightOffset <= movement.right; rightOffset++){
-    const row = startingPosition.x;
-    const column = (startingPosition.y + rightOffset) % columnWidth;
-  
-    if (treeMap[row][column] == TREE){
-      totalTreesSeen += 1
-    }
-  }
-  
-  const finalColumn = (startingPosition.y + movement.right) % columnWidth;
-  
-  for (var downOffset = 1; downOffset <= movement.down; downOffset++){
-    const column = finalColumn;
-    const row = startingPosition.y + downOffset;
-    
-    if (row < rowCount && treeMap[row][column] == TREE){
-      totalTreesSeen += 1
-    }
-    console.log("move Down")
-  }
-  
+  const finalColumn = (startingPosition.x + movement.right) % columnWidth;
+
   const finalRow = startingPosition.y + movement.down;
-  
+
+  if (finalRow < rowCount && treeMap[finalRow][finalColumn] == TREE) {
+    totalTreesSeen += 1;
+  }
+
   return {
     stats: {
       treesEncountered: totalTreesSeen,
     },
     finalPosition: {
       x: finalColumn,
-      y: finalRow
-    }
-  }
+      y: finalRow,
+    },
+  };
 }
 
-function walkMapWithOffset(treeMap, movement) /* MovementResult */ {
+function sledMapWithOffset(treeMap, movement) /* MovementResult */ {
   const hillHeight = treeMap.length;
-  
-  var currentPosition = {x: 0, y: 0};
+
+  var currentPosition = { x: 0, y: 0 };
   var treesSeen = 0;
-  
-  while(currentPosition.y < hillHeight){
-      const r = move(treeMap, currentPosition, movement)
-      treesSeen += r.stats.treesEncountered;
-      currentPosition = r.finalPosition;
-      console.log(r)
+
+  while (currentPosition.y < hillHeight) {
+    const r = move(treeMap, currentPosition, movement);
+    treesSeen += r.stats.treesEncountered;
+    currentPosition = r.finalPosition;
   }
-  
+
   return {
     stats: {
       treesEncountered: treesSeen,
-      finalPosition: currentPosition
-    }
-  }
+      finalPosition: currentPosition,
+    },
+  };
+}
 
+function treesEncounteredOnSled(treeMap, movement) {
+  return sledMapWithOffset(treeMap, movement).stats.treesEncountered;
+}
+
+function productOfTreesEncountered(treeMap, movements) {
+  return movements.reduce((product, movement) => {
+    const trees = treesEncounteredOnSled(treeMap, movement);
+    return product * trees;
+  }, 1);
 }
 
 function main() {
-  //  const input = fs.readFileSync("./inputs/dayX.txt", "utf8");
-  const treeMap = sampleInput()
+  const treeMap = realInput()
     .split("\n")
-    .map(line => {
-      return line.split("")
-    })
-    
-  const a = walkMapWithOffset(treeMap, {right: 3, down: 1})
-  console.log(a);
+    .map((line) => {
+      return line.split("");
+    });
+
+  const result = treesEncounteredOnSled(treeMap, { right: 3, down: 1 });
+  console.log(result);
+
+  const result2 = productOfTreesEncountered(treeMap, [
+    { right: 1, down: 1 },
+    { right: 3, down: 1 },
+    { right: 5, down: 1 },
+    { right: 7, down: 1 },
+    { right: 1, down: 2 },
+  ]);
+
+  console.log(result2);
 }
 
 main();
