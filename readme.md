@@ -14,3 +14,4 @@
  - File opener (Command+P from VSCode)
  - UNDO?
  - move line up and down
+ - Command + and - to size up and down font
