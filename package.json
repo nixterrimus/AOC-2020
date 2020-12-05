@@ -6,6 +6,7 @@
     "day-2": "node solutions/day2.js",
     "day-3": "node solutions/day3.js",
     "day-4": "node solutions/day4.js",
+    "day-5": "node solutions/day5.js",
     "prettier": "prettier --write solutions/*"
   },
   "dependencies": {},
