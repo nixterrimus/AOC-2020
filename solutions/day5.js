@@ -94,7 +94,7 @@ function main() {
     .sort((a, b) => a - b);
   const result2 = findMissingSeat(sortedSeats);
 
-  //  console.log(result)
+  console.log(result)
   console.log(result2);
 }
 
