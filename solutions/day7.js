@@ -50,14 +50,14 @@ function parseBagDetails(bagDetails) {
 }
 
 // Construct a bag map from a given input
-function buildBagMap(input){
+function buildBagMap(input) {
   const result = input.split("\n").map(parseBag);
 
   const bagMap = result.reduce((bagMap, bagItem) => {
     return _addItemToMap(bagMap, bagItem);
   }, {});
-  
-  return bagMap
+
+  return bagMap;
 }
 
 function _addSubItemToMap(map, item, containedByColor) {
@@ -100,26 +100,31 @@ function colorsThatCanContainColor(map, color) {
   return colors;
 }
 
-function uniqueColorCountThatContainColor(map, color){
+function uniqueColorCountThatContainColor(map, color) {
   const colors = colorsThatCanContainColor(map, color);
-    const uniqueColors = [...new Set(colors)];
-    return uniqueColors.length;
+  const uniqueColors = [...new Set(colors)];
+  return uniqueColors.length;
 }
 
 function numberOfBagsContainedBy(map, color) {
   return map[color].contains.reduce((total, containedColor) => {
-    return total + containedColor.quantity +
+    return (
+      total +
+      containedColor.quantity +
       containedColor.quantity *
-        numberOfBagsContainedBy(map, containedColor.name);
+        numberOfBagsContainedBy(map, containedColor.name)
+    );
   }, 0);
 }
 
-
 function main() {
- const bagMap = buildBagMap(realInput())
+  const bagMap = buildBagMap(realInput());
 
-  const containingShinyGold = uniqueColorCountThatContainColor(bagMap, "shiny gold");
-  console.log(containingShinyGold)
+  const containingShinyGold = uniqueColorCountThatContainColor(
+    bagMap,
+    "shiny gold"
+  );
+  console.log(containingShinyGold);
 
   const shinyGoldBagsContain = numberOfBagsContainedBy(bagMap, "shiny gold");
   console.log(shinyGoldBagsContain);
