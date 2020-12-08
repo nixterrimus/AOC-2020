@@ -18,8 +18,9 @@ function realInput() {
   return fs.readFileSync("./inputs/day8.txt", "utf8").trim();
 }
 
-//
+MAX_PROGRAM_COUNTER = 10_000;
 
+//
 /*
 type ModifyAcc {
   type: "acc"
@@ -138,8 +139,8 @@ function run(commands) {
       state.isCrashed = true;
     }
 
-    if (programCounter == 1000) {
-      console.log("Exceeded mcaximum program counter");
+    if (programCounter == MAX_PROGRAM_COUNTER) {
+      console.log("Exceeded maximum program counter");
       console.log(state);
       process.exit(1);
     }
